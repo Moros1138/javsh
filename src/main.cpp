@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include <chrono>
 
 #include <sys/wait.h>
 #include <sys/types.h>
@@ -14,9 +15,9 @@
 
 namespace javsh
 {
-    // Beratement
-    int nBerateTracker;
-    int nBerateFrequency;
+    // Taunt
+    int nTauntTracker;
+    int nTauntFrequency;
     
     // collection of quotes
     std::vector<std::string> vQuotes;
@@ -66,9 +67,14 @@ namespace javsh
     // berate with a random quote based on the defined frequency
     void Berate()
     {
-        nBerateTracker++;
+        std::cout << "\nTook you long enough. Do you need help? Google is your friend! RTFM!\n\n";
+    }
 
-        if((nBerateTracker % nBerateFrequency) == 0)
+    void Taunt()
+    {
+        nTauntTracker++;
+
+        if((nTauntTracker % nTauntFrequency) == 0)
             std::cout << std::endl << vQuotes[rand() % vQuotes.size()] << std::endl << std::endl;
     }
 
@@ -231,11 +237,11 @@ namespace javsh
         // seed randomizer
         srand(time(NULL));
         
-        // beratement tracker
-        nBerateTracker = 0;
+        // taunt tracker
+        nTauntTracker = 0;
         
-        // this determines how often you are berated by quotes
-        nBerateFrequency = 3;
+        // this determines how often you are taunted by quotes
+        nTauntFrequency = 3;
        
         // because no unintialized variables ;)
         ppArgs = NULL;
@@ -260,6 +266,8 @@ namespace javsh
         
         std::cout << "Why? Everybody knows \033[0;32mThe Great Machines\033[0m are \033[0;34mWindows\033[0m\n\n";
         
+        std::chrono::time_point<std::chrono::system_clock> tp1, tp2;
+
         do
         {
             // show current directory in prompt
@@ -267,12 +275,25 @@ namespace javsh
             // show prompt
             std::cout << "\033[0m$ ";
             
+            tp1 = std::chrono::system_clock::now();
+            
             // get our user-input/commands
             std::string sLine;
             std::getline(std::cin, sLine);
             
-            // berate the user for using linux
-            Berate();
+            tp2 = std::chrono::system_clock::now();
+            
+            std::chrono::duration<double> elapsed_seconds = tp2 - tp1;
+            if(elapsed_seconds.count() > 10.0f)
+            {
+                Berate();
+            }
+            else
+            {
+                // berate the user for using linux
+                Taunt();
+            }
+            
 
             // break the user-input into tokens
             TokenizeArgs(sLine, " ");
