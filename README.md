@@ -6,6 +6,10 @@ Just a spot of fun because I couldn't come up with a serious project.
 
 This is intended to be funny! Don't overthink it!
 
+## JavSH - The Demo Video
+
+[![Screenshot 1](https://github.com/Moros1138/javsh/raw/master/github-assets/youtube-screenshot.png)](https://www.youtube.com/watch?v=AeIdau4PArE)
+
 ## JavSH - Everybody knows the Great Machines are Windows
 
 ![Screenshot 1](https://github.com/Moros1138/javsh/raw/master/github-assets/javsh-1.png)
