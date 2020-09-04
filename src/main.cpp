@@ -263,7 +263,7 @@ namespace javsh
         do
         {
             // show current directory in prompt
-            std::cout << "\033[0;34m" << std::filesystem::current_path().c_str();
+            std::cout << "\033[0;36m" << std::filesystem::current_path().c_str();
             // show prompt
             std::cout << "\033[0m$ ";
             
