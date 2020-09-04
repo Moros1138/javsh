@@ -1,0 +1,2 @@
+Linux \033[1;31mSucks!\033[0m 
+\033[1;36mWindows\033[0m just works.
