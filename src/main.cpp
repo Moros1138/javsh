@@ -43,7 +43,7 @@ namespace javsh
 
     void LoadQuotes()
     {
-        std::ifstream ifs("javid_quotes.txt");
+        std::ifstream ifs("quotes.txt");
 
         for(std::string line; std::getline(ifs, line);)
         {
@@ -86,7 +86,7 @@ namespace javsh
 
         mapBuiltInCommands["quotes"] = [&](char** args)
         {
-            std::cout << "\nJavid Quotes\n----------------------\n\n";
+            std::cout << "\nQuotes\n----------------------\n\n";
 
             for(auto &quote : vQuotes)
                 std::cout << quote << std::endl << std::endl;
@@ -223,7 +223,6 @@ namespace javsh
 
 int main(int argc, char* argv[])
 {
-    system("clear");
     javsh::Init();
 
     return 0;
