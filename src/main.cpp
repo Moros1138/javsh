@@ -57,10 +57,12 @@ namespace javsh
 
     void Berate()
     {
+        nBerateTracker++;
+        
         if((nBerateTracker % nBerateFrequency) == 0)
             std::cout << std::endl << vQuotes[rand() % vQuotes.size()] << std::endl << std::endl;
         
-        nBerateTracker++;
+        
     }
 
     void DefineBuiltInCommands()
