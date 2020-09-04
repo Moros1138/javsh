@@ -1,5 +1,6 @@
 #include <cstring>
 
+#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -41,10 +42,10 @@ namespace javsh
         }
     }
 
-    void LoadQuotes()
+    int LoadQuotes(char** args)
     {
         std::ifstream ifs("quotes.txt");
-
+        vQuotes.clear();
         for(std::string line; std::getline(ifs, line);)
         {
             StringReplace(line, "\\033", "\033");
@@ -53,16 +54,15 @@ namespace javsh
             vQuotes.push_back(line);
         }
         ifs.close();
+        return 1;
     }
 
     void Berate()
     {
         nBerateTracker++;
-        
+
         if((nBerateTracker % nBerateFrequency) == 0)
             std::cout << std::endl << vQuotes[rand() % vQuotes.size()] << std::endl << std::endl;
-        
-        
     }
 
     void DefineBuiltInCommands()
@@ -86,6 +86,8 @@ namespace javsh
         mapBuiltInCommands["exit"] = &QuitFunc;
         mapBuiltInCommands["quit"] = &QuitFunc;
 
+        mapBuiltInCommands["reload"] = &LoadQuotes;
+        
         mapBuiltInCommands["quotes"] = [&](char** args)
         {
             std::cout << "\nQuotes\n----------------------\n\n";
@@ -201,13 +203,22 @@ namespace javsh
        
         ppArgs = NULL;
 
-        LoadQuotes();
+        LoadQuotes(ppArgs);
         DefineBuiltInCommands();
 
+        // Clear the Terminal On Start-Up
+        TokenizeArgs("clear", " ");
+        
+        GetArgs();
+        nStatus = Execute();
+        FreeArgs();
+
+        std::cout << "\033[0;35mWelcome to JavSH.\033[0m\n\nYOU are using \033[1;31mLinux!\033[0m\n\nWhy? Everybody knows \033[0;32mThe Great Machines\033[0m are \033[0;34mWindows\033[0m\n\n";
         // LOOP FOREVER
         do
         {
-            std::cout << "$ ";
+            std::cout << "\033[0;34m" << std::filesystem::current_path().c_str();
+            std::cout << "\033[0m$ ";
             std::string sLine;
             std::getline(std::cin, sLine);
             
