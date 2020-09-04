@@ -84,10 +84,27 @@ namespace javsh
         };
         
         mapBuiltInCommands["exit"] = &QuitFunc;
+        
+        mapBuiltInCommands["help"] = [&](char** args)
+        {
+            std::cout << "\033[0;33mOf course you need help.\033[0m You're on \033[1;31mLINUX!\033[0m\n\n";
+            std::cout << "Type program names and arguments, and hit enter.\n\n";
+            
+            std::cout << "The following are built in:\n\n";
+
+            for(auto &cmd : mapBuiltInCommands)
+                std::cout << "    " << cmd.first << std::endl;
+                
+            std::cout << std::endl;
+
+            std::cout << "Use the man command (because \033[1;31mLINUX\033[0m) for information\non other programs.\n\n";
+            return 1;
+        };
+
         mapBuiltInCommands["quit"] = &QuitFunc;
 
         mapBuiltInCommands["reload"] = &LoadQuotes;
-        
+
         mapBuiltInCommands["quotes"] = [&](char** args)
         {
             std::cout << "\nQuotes\n----------------------\n\n";
